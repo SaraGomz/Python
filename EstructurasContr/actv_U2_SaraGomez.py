@@ -1,3 +1,11 @@
+import random
+
+
+
+
+
+
+
 ############ U2.01 fizzbuzz
 
 def main_U2_01():
@@ -277,7 +285,7 @@ def main_U2_11():
             else:
                 print("Negra")
 
-main_U2_11()
+# main_U2_11()
 ######### Fin U2.11. Color de una casilla de ajedrez
 
 
@@ -356,5 +364,288 @@ def main_U2_12():
 
     print(f"Tu signo es {signo}")
 
-main_U2_12()
+# main_U2_12()
 ######### Fin U2.12. Signo del zodiaco según la fecha de nacimiento
+
+
+######### U2.13. Color de una longitud de onda
+
+def main_U2_13():
+    nanometros = float(input("Introduce nanometros: "))
+
+    if nanometros >= 380 and nanometros <= 449 :
+        print("Violeta")
+    elif nanometros >= 450 and nanometros <= 494 :
+        print("Azul")
+    elif nanometros >= 495 and nanometros <= 569 :
+        print("Verde")
+    elif nanometros >= 570 and nanometros <= 589 :
+        print("Amarillo")
+    elif nanometros >= 590 and nanometros <= 619 :
+        print("Naranja")
+    else:
+        print("queda fuera del intervalo visible considerado en este ejercicio")
+
+# main_U2_13()
+
+######### Fin U2.13. Color de una longitud de onda
+
+
+
+######### U2.14. Año bisiesto
+
+def main_U2_14():
+    anio = int(input("Escribe un año: "))
+    loes = es_bisiesto(anio)
+
+    if loes == True:
+        print(f"{anio} es un año bisiesto")
+    else:
+        print(f"{anio} no es un año bisiesto")
+
+def es_bisiesto(anio):
+    comprobacion = None
+
+    if anio % 400 == 0:
+        comprobacion = True
+    elif anio % 100 == 0:
+        comprobacion = False
+    elif anio % 4  == 0:
+        comprobacion = True
+    else:
+        comprobacion = False
+
+    return comprobacion
+
+# main_U2_14()
+
+######### Fin U2.14. Año bisiesto
+
+
+
+######### U2.15. Generación de una contraseña aleatoria
+
+def main_U2_15():
+    contra = generar_contrasena()
+    print(contra)
+
+def generar_contrasena():
+    longitud = random.randint(7,10)
+    caracteres = []
+
+    for i in range(longitud):
+        codigo_ascii = random.randint(33,126)
+        caracter = chr(codigo_ascii)
+        caracteres.append(caracter)
+
+    final_password = "".join(caracteres)
+    return final_password
+
+# main_U2_15()
+
+######### Fin U2.15. Generación de una contraseña aleatoria
+
+
+
+######### U2.16. Comprobación de una contraseña
+
+def main_U2_16():
+    contra = generar_contrasena()
+    comprobacion = es_contrasena_valida(contra)
+
+    if comprobacion:
+        print("La contraseña es válida")
+    else: 
+        print("La contraseña no es válida")
+def es_contrasena_valida(contrasena):
+    cumple = None
+    if len(contrasena) >= 8:
+        if any("A" <= i <= "Z" for i in contrasena):
+            if any(j.islower() for j in contrasena):
+                if any(x.isdigit() for x in contrasena):
+                    cumple = True
+    else:
+        cumple = False
+
+    return cumple
+
+# main_U2_16()
+######### Fin U2.16. Comprobación de una contraseña
+
+
+
+######### U2.17. Generación de una contraseña que cumpla las condiciones
+
+def main_U2_17():
+    valida = None
+    cont = 0
+    while not valida:
+        cont += 1
+        contrasena = generar_contrasena()
+        valida = es_contrasena_valida(contrasena)
+
+    print(f"contraseña apta: {contrasena} intentos requeridos: {cont}")
+
+# main_U2_17()
+
+
+######### Fin U2.17. Generación de una contraseña que cumpla las condiciones
+
+
+
+######### U2.18. Siguiente número primo
+
+def main_U2_18():
+    numero = int(input("Introduce un numero entero: "))
+    comprobar = es_primo(numero)
+
+    if comprobar:
+        print(f"El número {numero} es primo")
+    else: 
+        print(f"El número {numero} no es primo")
+
+def es_primo(numero):
+    es_primo = True
+    if numero < 2:
+        es_primo = False
+    for i in range(2, numero):
+        if numero % i == 0:
+            es_primo = False  
+
+    return es_primo
+
+# main_U2_18()    
+######### Fin U2.18. Siguiente número primo
+
+
+#########  U2.19 Número de días de un mes
+
+def main_U2_19():
+    mes = int(input("Introduce un mes, del 1 al 12: "))
+    anio = int(input("introduce un año aaaa: "))
+    dias = dias_del_mes(mes, anio)
+
+    print(f"el mes {mes} en el año {anio} tiene en total {dias} dias")
+
+def dias_del_mes(mes, anio):
+    dias = 0
+    if mes == 4 or mes == 6 or mes == 9 or mes == 11:
+        dias = 30
+    elif mes == 1 or mes == 3 or mes == 5 or mes == 7 or mes == 8 or mes == 10 or  mes == 12:
+        dias = 31
+    else:
+        bisiesto = es_bisiesto(anio)
+        if bisiesto:
+            dias = 29
+        else:
+            dias = 28
+    return dias
+
+main_U2_19()
+######### Fin  U2.19 Número de días de un mes
+
+
+#########  U2.20. Fechas mágicas
+
+def main_U2_20():
+    for anio in range(1901, 2001):
+        for mes in range(1, 13):
+            for dia in range(1, dias_del_mes(mes, anio) + 1):
+
+                if es_fecha_magica(dia, mes, anio):
+                    print(f"{dia:02d}/{mes:02d}/{anio} (porque {dia} * {mes} = {anio % 100})")
+
+def  es_fecha_magica(dia, mes, anio):
+    dos_ultimas_cifras = anio % 100
+
+    if (dia * mes) == dos_ultimas_cifras:
+        return True
+    else:
+        return False
+
+
+def separar_y_validar_fecha(fecha_str):
+    partes = fecha_str.split("/")
+    if len(partes) != 3:
+        return None
+
+    dia_str, mes_str, anio_str = partes
+
+
+    if not (dia_str.isdigit() and mes_str.isdigit() and anio_str.isdigit()):
+        return None
+
+    dia = int(dia_str)
+    mes = int(mes_str)
+    anio = int(anio_str)
+
+    if anio <= 0 or mes < 1 or mes > 12:
+        return None
+
+    max_dias = dias_del_mes(mes, anio)
+
+    if dia < 1 or dia > max_dias:
+        return None
+
+    return dia, mes, anio
+#########  Fin   U2.20. Fechas mágicas
+
+import math
+
+
+def distancia_tierra(latitud1, longitud1, latitud2, longitud2):
+  """Recibe las coordenadas de dos puntos en grados, las convierte a radianes
+
+  y calcula la distancia en kilómetros sobre una esfera de radio 6371.01 km.
+  Devuelve el valor numérico de la distancia.
+  """
+  # 1. Convertir los grados a radianes
+  t1 = math.radians(latitud1)
+  g1 = math.radians(longitud1)
+  t2 = math.radians(latitud2)
+  g2 = math.radians(longitud2)
+
+  # 2. Aplicar la fórmula trigonométrica
+  # argumento_acos = sin(t1)*sin(t2) + cos(t1)*cos(t2)*cos(g1 - g2)
+  argumento = math.sin(t1) * math.sin(t2) + math.cos(t1) * math.cos(
+      t2
+  ) * math.cos(g1 - g2)
+
+  # 3. NOTA IMPORTANTE: Limitar el argumento al intervalo [-1, 1]
+  # para evitar errores de precisión en coma flotante con math.acos()
+  if argumento > 1.0:
+    argumento = 1.0
+  elif argumento < -1.0:
+    argumento = -1.0
+
+  # 4. Calcular la distancia final
+  radio_tierra = 6371.01
+  distancia = radio_tierra * math.acos(argumento)
+
+  return distancia
+
+
+def main_U2_07():
+  print("--- CÁLCULO DE DISTANCIA ENTRE DOS PUNTOS DE LA TIERRA ---")
+
+  # Solicitamos las coordenadas de la primera ciudad/punto
+  lat1 = float(input("Introduce la latitud del primer punto (-90 a 90): "))
+  lon1 = float(input("Introduce la longitud del primer punto (-180 a 180): "))
+
+  # Solicitamos las coordenadas de la segunda ciudad/punto
+  lat2 = float(input("Introduce la latitud del segundo punto (-90 a 90): "))
+  lon2 = float(input("Introduce la longitud del segundo punto (-180 a 180): "))
+
+  # Llamamos a la función para obtener la distancia
+  distancia_calculada = distancia_tierra(lat1, lon1, lat2, lon2)
+
+  # Mostramos el resultado con dos cifras decimales usando formato :.2f
+  print(
+      f"\nLa distancia entre los puntos es de"
+      f" **{distancia_calculada:.2f} km**."
+  )
+
+
+# Ejecutamos el programa principal
+if __name__ == "__main__":
+  main_U2_07()
