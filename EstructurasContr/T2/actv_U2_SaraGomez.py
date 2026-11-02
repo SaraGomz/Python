@@ -1,4 +1,5 @@
 import random
+import math
 
 
 
@@ -153,7 +154,40 @@ def main_U2_06():
 
 
 ######### U2.07. Distancia entre dos puntos de la Tierra
+def distancia_tierra(latitud1, longitud1, latitud2, longitud2):
+  t1 = math.radians(latitud1)
+  g1 = math.radians(longitud1)
+  t2 = math.radians(latitud2)
+  g2 = math.radians(longitud2)
 
+  argumento = math.sin(t1) * math.sin(t2) + math.cos(t1) * math.cos(t2) * math.cos(g1 - g2)
+
+
+  if argumento > 1.0:
+    argumento = 1.0
+  elif argumento < -1.0:
+    argumento = -1.0
+
+  radio_tierra = 6371.01
+  distancia = radio_tierra * math.acos(argumento)
+
+  return distancia
+
+
+def main_U2_07():
+  lat1 = float(input("Introduce la latitud del primer punto (-90 a 90): "))
+  lon1 = float(input("Introduce la longitud del primer punto (-180 a 180): "))
+
+  lat2 = float(input("Introduce la latitud del segundo punto (-90 a 90): "))
+  lon2 = float(input("Introduce la longitud del segundo punto (-180 a 180): "))
+
+  distancia_calculada = distancia_tierra(lat1, lon1, lat2, lon2)
+
+  print(f"La distancia entre los puntos es de {distancia_calculada} km")
+
+
+
+main_U2_07()
 
 ######### Fin U2.07. Distancia entre dos puntos de la Tierra
 
@@ -589,63 +623,3 @@ def separar_y_validar_fecha(fecha_str):
 
     return dia, mes, anio
 #########  Fin   U2.20. Fechas mágicas
-
-import math
-
-
-def distancia_tierra(latitud1, longitud1, latitud2, longitud2):
-  """Recibe las coordenadas de dos puntos en grados, las convierte a radianes
-
-  y calcula la distancia en kilómetros sobre una esfera de radio 6371.01 km.
-  Devuelve el valor numérico de la distancia.
-  """
-  # 1. Convertir los grados a radianes
-  t1 = math.radians(latitud1)
-  g1 = math.radians(longitud1)
-  t2 = math.radians(latitud2)
-  g2 = math.radians(longitud2)
-
-  # 2. Aplicar la fórmula trigonométrica
-  # argumento_acos = sin(t1)*sin(t2) + cos(t1)*cos(t2)*cos(g1 - g2)
-  argumento = math.sin(t1) * math.sin(t2) + math.cos(t1) * math.cos(
-      t2
-  ) * math.cos(g1 - g2)
-
-  # 3. NOTA IMPORTANTE: Limitar el argumento al intervalo [-1, 1]
-  # para evitar errores de precisión en coma flotante con math.acos()
-  if argumento > 1.0:
-    argumento = 1.0
-  elif argumento < -1.0:
-    argumento = -1.0
-
-  # 4. Calcular la distancia final
-  radio_tierra = 6371.01
-  distancia = radio_tierra * math.acos(argumento)
-
-  return distancia
-
-
-def main_U2_07():
-  print("--- CÁLCULO DE DISTANCIA ENTRE DOS PUNTOS DE LA TIERRA ---")
-
-  # Solicitamos las coordenadas de la primera ciudad/punto
-  lat1 = float(input("Introduce la latitud del primer punto (-90 a 90): "))
-  lon1 = float(input("Introduce la longitud del primer punto (-180 a 180): "))
-
-  # Solicitamos las coordenadas de la segunda ciudad/punto
-  lat2 = float(input("Introduce la latitud del segundo punto (-90 a 90): "))
-  lon2 = float(input("Introduce la longitud del segundo punto (-180 a 180): "))
-
-  # Llamamos a la función para obtener la distancia
-  distancia_calculada = distancia_tierra(lat1, lon1, lat2, lon2)
-
-  # Mostramos el resultado con dos cifras decimales usando formato :.2f
-  print(
-      f"\nLa distancia entre los puntos es de"
-      f" **{distancia_calculada:.2f} km**."
-  )
-
-
-# Ejecutamos el programa principal
-if __name__ == "__main__":
-  main_U2_07()
