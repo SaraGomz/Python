@@ -1,12 +1,6 @@
 import random
 import math
 
-
-
-
-
-
-
 ############ U2.01 fizzbuzz
 
 def main_U2_01():
